@@ -396,6 +396,8 @@ _Responder en un párrafo breve (5 a 10 líneas):_
 - ¿En qué casos usarían SOAP?
 - ¿En qué casos usarían REST?
 
+La verdad es que si note bastante diferencia entre los dos con SOAP tuve que armar un contrato que se llama WSDL y ahi tenia que estar bien definido cada dato antes de poder usarlo y con REST fue mas facil porque solo puse el codigo y ya funcionaba sin tanta vuelta. Para mi REST fue el mas sencillo de hacer porque no tuve que preocuparme por un contrato tan estricto y las pruebas salian mas rapido. Usaria SOAP en cosas como bancos o sistemas grandes donde todo tiene que estar bien seguro y bien definido. Y usaria REST para cosas mas simples como una pagina web o una app donde lo que importa es que sea rapido facil de usar y de entender.
+
 
 ---
 
