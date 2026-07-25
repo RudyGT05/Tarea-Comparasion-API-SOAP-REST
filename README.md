@@ -8,7 +8,7 @@ Proyecto académico que expone **la misma operación** mediante dos estilos de s
 **Operación implementada:** conversión de temperatura de grados Celsius a Fahrenheit.
 
 ```
-F = (C × 9/5) + 32
+F = (C × 9/5) + 32 
 ```
 
 ---
