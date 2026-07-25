@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Contrato del servicio SOAP "ConversorTemperaturaService".
+
+  Esta es la version auto-contenida (el esquema va incrustado dentro de <types>).
+  El WSDL que genera el runtime en tiempo de ejecucion es equivalente, pero separa
+  el esquema en un archivo aparte que importa con <xsd:import schemaLocation="...?xsd=1"/>.
+
+  Se puede descargar el generado con:
+      curl "http://localhost:8081/ws/conversor?wsdl" -o wsdl/servicio-generado.wsdl
+-->
+<definitions name="ConversorTemperaturaService"
+             targetNamespace="http://soap.umg.edu.gt/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://soap.umg.edu.gt/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+    <!-- ============================================================
+         1) TYPES
+         Define los tipos de datos que viajan en los mensajes, usando
+         XML Schema (XSD). Aqui vive el "modelo de datos" del contrato:
+         que elementos existen, de que tipo son y si son obligatorios.
+         ============================================================ -->
+    <types>
+        <xsd:schema targetNamespace="http://soap.umg.edu.gt/"
+                    elementFormDefault="unqualified">
+
+            <!-- Elemento raiz del mensaje de entrada (patron "document/literal wrapped":
+                 el nombre del elemento coincide con el nombre de la operacion) -->
+            <xsd:element name="convertirCelsiusAFahrenheit">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="celsius" type="xsd:double"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Elemento raiz del mensaje de salida -->
+            <xsd:element name="convertirCelsiusAFahrenheitResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="resultado" type="tns:resultadoConversion" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Tipo complejo reutilizable, generado a partir de la clase
+                 Java ResultadoConversion -->
+            <xsd:complexType name="resultadoConversion">
+                <xsd:sequence>
+                    <xsd:element name="valorOriginal"   type="xsd:double"/>
+                    <xsd:element name="escalaOrigen"    type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="valorConvertido" type="xsd:double"/>
+                    <xsd:element name="escalaDestino"   type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+        </xsd:schema>
+    </types>
+
+    <!-- ============================================================
+         2) MESSAGE
+         Un mensaje es la unidad de comunicacion: agrupa una o varias
+         "parts", donde cada part apunta a un elemento definido en <types>.
+         Se necesitan dos: uno para la peticion y uno para la respuesta.
+         ============================================================ -->
+    <message name="convertirCelsiusAFahrenheit">
+        <part name="parameters" element="tns:convertirCelsiusAFahrenheit"/>
+    </message>
+
+    <message name="convertirCelsiusAFahrenheitResponse">
+        <part name="parameters" element="tns:convertirCelsiusAFahrenheitResponse"/>
+    </message>
+
+    <!-- ============================================================
+         3) PORTTYPE
+         Es la "interfaz" abstracta del servicio: lista las operaciones
+         disponibles y, para cada una, que mensaje entra y cual sale.
+         Es el equivalente a una interfaz Java: dice QUE se puede hacer,
+         pero no COMO ni DONDE.
+         ============================================================ -->
+    <portType name="ConversorTemperatura">
+        <operation name="convertirCelsiusAFahrenheit">
+            <input  message="tns:convertirCelsiusAFahrenheit"/>
+            <output message="tns:convertirCelsiusAFahrenheitResponse"/>
+        </operation>
+    </portType>
+
+    <!-- ============================================================
+         4) BINDING
+         Enlaza el portType abstracto con un protocolo concreto:
+           - transport: SOAP sobre HTTP
+           - style="document" / use="literal": el cuerpo del sobre SOAP
+             contiene directamente el elemento XML validado contra el XSD
+           - soapAction: cabecera HTTP que identifica la operacion
+         Responde al COMO se transmite.
+         ============================================================ -->
+    <binding name="ConversorTemperaturaPortBinding" type="tns:ConversorTemperatura">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="convertirCelsiusAFahrenheit">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- ============================================================
+         5) SERVICE
+         Expone el servicio en una direccion concreta. Contiene uno o
+         mas <port>, y cada port asocia un binding con una URL real.
+         Responde al DONDE esta el servicio.
+         ============================================================ -->
+    <service name="ConversorTemperaturaService">
+        <port name="ConversorTemperaturaPort" binding="tns:ConversorTemperaturaPortBinding">
+            <soap:address location="http://localhost:8081/ws/conversor"/>
+        </port>
+    </service>
+
+</definitions>

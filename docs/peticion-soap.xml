@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:con="http://soap.umg.edu.gt/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:convertirCelsiusAFahrenheit>
+         <celsius>25</celsius>
+      </con:convertirCelsiusAFahrenheit>
+   </soapenv:Body>
+</soapenv:Envelope>
